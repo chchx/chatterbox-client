@@ -25,13 +25,14 @@
     <div id="main">
       <h1>chatterbox</h1>
       <div class="spinner"><img src="client/images/spiffygif_46x46.gif"></div>
+      <button class="refresh">Refresh</button>
       <div id="rooms">
         Room:
         <select></select>
         <button>Add Room</button>
       </div>
       <form action="#" id="send" method="post">
-        <input type="text" name="message" id="message"/>
+        <input type="text" name="message" id="message" required/>
         <input type="submit" name="submit" class="submit"/>
       </form>
     </div>
@@ -47,6 +48,9 @@
     <script src="client/scripts/messagesView.js"></script>
     <script src="client/scripts/app.js"></script>
     <script>
+      // (function () {
+      //    App.initialize()
+      // })()
       $(() => App.initialize());
     </script>
   </body>

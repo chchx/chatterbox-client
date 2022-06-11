@@ -8,42 +8,67 @@ var App = {
 
   username: 'anonymous',
 
-  initialize: function() {
+  initialize: function () {
     App.username = window.location.search.substr(10);
 
     FormView.initialize();
-    // RoomsView.initialize();
+    RoomsView.initialize();
     MessagesView.initialize();
 
     // Fetch initial batch of messages
     App.startSpinner();
     App.fetch(App.stopSpinner);
+    // setInterval( () => {
+    // }, 3000);
 
     // TODO: Make sure the app loads data from the API
     // continually, instead of just once at the start.
+
+    $('.refresh').on('click', () => {
+      console.log('eawgf');
+      Messages._data = [];
+      MessagesView.$chats.html('');
+      App.startSpinner();
+      App.fetch(App.stopSpinner);
+    });
   },
 
-  fetch: function(callback = ()=>{}) {
+  fetch: function (callback = () => { }) {
     Parse.readAll( (data) => {
       // console.log('error:', err);
       // examine the response from the server request:
       // console.log(data);
-      data.forEach((msg) => Messages._data.push(msg));
-      console.log(Messages._data);
-      // TODO: Use the data to update Messages and Rooms
-      // and re-render the corresponding views.
-      MessagesView.initialize();
+
+      let regex = /<.+\/*>/g;
+      // data.forEach( (msg) => {
+      //   ['text', 'username', 'roomname'].forEach( (key) => {
+      //     if (typeof msg[key] !== undefined && msg[key] !== null && msg[key] !== "") {
+      //       msg[key] = msg[key].replace(regex, 'NICE TRY');
+      //     }
+      //   })
+      // })
+      for(let msg of data) {
+        Messages._data.push(msg);
+      }
+
+      //   //   // TODO: Use the data to update Messages and Rooms
+      //   //   // and re-render the corresponding views.
+      //   //   // MessagesView.initialize();
+      // });
+      console.log(data);
+      console.log('MESSAGES: ', Messages._data)
+
       RoomsView.initialize();
       callback();
     });
   },
 
-  startSpinner: function() {
+  startSpinner: function () {
     App.$spinner.show();
     FormView.setStatus(true);
   },
 
-  stopSpinner: function() {
+  stopSpinner: function () {
     App.$spinner.fadeOut('fast');
     FormView.setStatus(false);
   }

@@ -102,11 +102,10 @@ describe('chatterbox', function() {
       sinon.spy(Rooms, 'add');
       var prompt = window.prompt;
       window.prompt = sinon.stub().returns('testroom');
-
       App.initialize();
+      console.log($('#rooms').find('button').trigger('click'));
       $('#rooms').find('button').trigger('click');
       expect(Rooms.add.called).to.be.true;
-
       window.prompt = prompt;
       Rooms.add.restore();
     });

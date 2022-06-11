@@ -9,7 +9,8 @@ var Rooms = {
 
   // TODO: Define methods which allow you to add rooms, update the list,
   // mark a room as selected, etc.
-  addRoom: function(room) {
+  add: function(room) {
+    console.log('IM CALLED')
     Rooms._data.add(room);
   }
 
