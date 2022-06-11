@@ -12,7 +12,7 @@ var App = {
     App.username = window.location.search.substr(10);
 
     FormView.initialize();
-    RoomsView.initialize();
+    // RoomsView.initialize();
     MessagesView.initialize();
 
     // Fetch initial batch of messages
@@ -24,12 +24,17 @@ var App = {
   },
 
   fetch: function(callback = ()=>{}) {
-    Parse.readAll((data) => {
+    Parse.readAll( (data) => {
+      // console.log('error:', err);
       // examine the response from the server request:
-      console.log(data);
-
+      // console.log(data);
+      data.forEach((msg) => Messages._data.push(msg));
+      console.log(Messages._data);
       // TODO: Use the data to update Messages and Rooms
       // and re-render the corresponding views.
+      MessagesView.initialize();
+      RoomsView.initialize();
+      callback();
     });
   },
 
